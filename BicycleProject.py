@@ -28,12 +28,6 @@ class Bikeshop:
         self.printInventory()  # print initial inventory
         Bikeshop.shoplist[name] = self
 
-    def addBike(self, model, amount):
-        "add an amount of a bike model to the inventory"
-        self.bikelist.append(model)
-        self.inventory[model] = amount
-        self.pricing()  # determine the price
-
     def printAffordableBikeList(self, customer):
         "print the bike list that the customer can perchase with his budget"
         print("Customer has :", customer.budget)

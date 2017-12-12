@@ -1,18 +1,33 @@
+class BikeManufacturer:
+    "Bicycle Manufacturer class"
+
+    def __init__(self, name, percent):
+        self.name = name
+        self.bikes = []
+        self.percent = percent
+        
+    def makeBike(self, bike):
+        self.bikes.append(bike.model)
+
 class Bicycle:
     "Bicycle class"
 
-    bikelist = {} # dict with key is the model and value is list of weight and cost
-    costlist = {}  # dict with key is the model and the value is the cost
+    bikelist = {} # dict with key is the model and value is list of weight and cost and manufacturer name
+    costlist = {}  # dict with key is the model and the value is  manu cost
+    manulist = {} # dict with key is the model and value is the manufacturer object
 
-    def __init__(self, model, wheel, frame):
+    def __init__(self, model, wheel, frame, manu):
         "constructor"
         self.model = model
         self.weight = wheel.weight * 2 + frame.weight
-        self.cost = wheel.cost * 2 + frame.cost
+        self.cost = wheel.cost * 2 + frame.cost # manu cost
+        self.manu = manu.name
+        manu.makeBike(self)
 
-        l = [self.weight, self.cost]
+        l = [self.weight, self.cost, self.manu]
         Bicycle.bikelist[self.model] = l
         Bicycle.costlist[self.model] = self.cost
+        Bicycle.manulist[self.model] = manu
 
 class Wheel:
     "Wheel class"
@@ -85,7 +100,9 @@ class Bikeshop:
         "sell the bike that decreases the stock and gains the profit"
         if self.isInStock(model):
             self.inventory[model] = self.inventory[model] - 1
-            self.profit = self.profit + Bicycle.costlist[model] * 0.2
+            self.profit = self.profit + Bicycle.costlist[model] * (0.2 - Bicycle.manulist[model].percent)
+            # print(self.profit)
+            # bike shop lost a percentage from the Manufacturer
             return True
         else:
             print ("No bike left for that model")
@@ -95,7 +112,6 @@ class Bikeshop:
         "print sale report after the customers have finished buying"
         self.printInventory()
         print("Total profit: ", self.profit)
-
 
 class Customer:
     "Customer class"
@@ -153,19 +169,27 @@ f3 = Frame("Steel", 9, 6)
 
 print(Frame.framelist)
 
-b1 = Bicycle("B1", w1, f1)
-b2 = Bicycle("B2", w1, f2)
-b3 = Bicycle("B3", w2, f1)
-b4 = Bicycle("B4", w3, f3)
-b5 = Bicycle("B5", w2, f3)
-b6 = Bicycle("B6", w3, f2)
+m1 = BikeManufacturer("M1", 0.05)
+
+b1 = Bicycle("B1", w1, f1, m1)
+b2 = Bicycle("B2", w1, f2, m1)
+b4 = Bicycle("B4", w3, f3, m1)
+
+print("M1 :", m1.bikes)
+
+m2 = BikeManufacturer("M2", 0.07)
+
+b5 = Bicycle("B5", w2, f3, m2)
+b6 = Bicycle("B6", w3, f2, m2)
+b3 = Bicycle("B3", w2, f2, m2)
+
+print("M2 :", m2.bikes)
 
 print(Bicycle.bikelist)
 
 i1 = {'B1': 2, 'B2': 3, 'B3': 4, 'B4':1, 'B6': 3, 'B5': 1}
 s1 = Bikeshop("SHOP1", i1)
 
-print(Bikeshop.shoplist)
 print(s1.pricelist)
 
 c1 = Customer("C1", 200)
