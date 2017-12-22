@@ -43,7 +43,7 @@ class Bikeshop:
     def pricing(self):
         "determine the price of the bike belongs to the bike list of shop"
         for model in self.bikelist:
-            self.pricelist[model] = Bicycle.costlist[model] * 1.2
+            self.pricelist[model] = Bicycle.costlist[model] * 1.2 #nen tach margin
 
     def isInStock(self, model):
         "check if the bike of the model is in stock"
@@ -132,13 +132,18 @@ c2 = Customer("C2", 500)
 c3 = Customer("C3", 1000)
 print(Customer.budgetlist)
 print(Customer.bicyclelist)
-
+print("***********")
+print(c1.budgetlist)
+print(c2.budgetlist)
+print(c3.budgetlist)
 c1.goToShop(s1)
 c2.goToShop(s1)
 c3.goToShop(s1)
 
 c1.buyBike('B5',s1)
 c1.buyBike('B1',s1)
+print("them")
+s1.printInventory()
 c1.printCustomerInfo()
 c2.buyBike('B1', s1)
 c2.printCustomerInfo()

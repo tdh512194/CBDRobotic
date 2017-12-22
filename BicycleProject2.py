@@ -36,7 +36,7 @@ class Frame:
         self.weight = weight
         self.cost = cost
 
-        l = [weight, cost]
+        l = [weight, cost] #dung dict
         Frame.framelist[material] = l
 
 class Bikeshop:

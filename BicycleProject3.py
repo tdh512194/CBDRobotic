@@ -5,7 +5,7 @@ class BikeManufacturer:
         self.name = name
         self.bikes = []
         self.percent = percent
-        
+
     def makeBike(self, bike):
         self.bikes.append(bike.model)
 
